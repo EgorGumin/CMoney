@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.lymno.cmoney.R;
 import com.lymno.cmoney.Server;
+import com.lymno.cmoney.activity.AddWallet;
 import com.lymno.cmoney.adapter.WalletsAdapter;
 import com.lymno.cmoney.model.Wallet;
 import com.lymno.cmoney.model.WalletOperation;
@@ -75,8 +76,8 @@ public class DrawerWallet extends Fragment {
         ButterKnife.bind(this, view);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), ScannerFragmentActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), AddWallet.class);
+                startActivity(intent);
             }
         });
 

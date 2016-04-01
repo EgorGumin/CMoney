@@ -17,22 +17,22 @@ public class Server {
         ArrayList<WalletOperation> walletOperations1 = new ArrayList<>();
         ArrayList<WalletOperation> walletOperations2 = new ArrayList<>();
 
-        walletOperations0.add(new WalletOperation("Лента", "rhinrei", new Date(2016, 4, 1), 334456));
-        walletOperations0.add(new WalletOperation("БСК", "rhinrei", new Date(2016, 3, 31), 96000));
-        walletOperations0.add(new WalletOperation("Самокаты", "rhinrei", new Date(2016, 3, 27), 32300));
-        walletOperations0.add(new WalletOperation("Перекресток", "coloredlime", new Date(2016, 3, 16), 120000));
-        walletOperations0.add(new WalletOperation("Кафе", "coloredlime", new Date(2016, 3, 13), 86000));
-        walletOperations0.add(new WalletOperation("Общежитие", "rhinrei", new Date(2016, 3, 10), 124000));
-        walletOperations0.add(new WalletOperation("Экскурсия", "coloredlime", new Date(2016, 3, 7), 160000));
-        walletOperations0.add(new WalletOperation("БСК", "coloredlime", new Date(2016, 3, 2), 96000));
+        walletOperations0.add(new WalletOperation("Лента", "rhinrei", new Date(2016, 3, 1), 334400));
+        walletOperations0.add(new WalletOperation("БСК", "rhinrei", new Date(2016, 2, 30), 96000));
+        walletOperations0.add(new WalletOperation("Самокаты", "rhinrei", new Date(2016, 2, 27), 32300));
+        walletOperations0.add(new WalletOperation("Перекресток", "coloredlime", new Date(2016, 2, 16), 120000));
+        walletOperations0.add(new WalletOperation("Кафе", "coloredlime", new Date(2016, 2, 13), 86000));
+        walletOperations0.add(new WalletOperation("Общежитие", "rhinrei", new Date(2016, 2, 10), 124000));
+        walletOperations0.add(new WalletOperation("Экскурсия", "coloredlime", new Date(2016, 2, 7), 160000));
+        walletOperations0.add(new WalletOperation("БСК", "coloredlime", new Date(2016, 2, 2), 96000));
 
-        walletOperations1.add(new WalletOperation("Канцтовары", "bronenosez", new Date(2016, 3, 19), 257000));
-        walletOperations1.add(new WalletOperation("Бумага и картриджи", "sinitsa", new Date(2016, 3, 12), 113000));
-        walletOperations1.add(new WalletOperation("Кофе/чай", "coloredlime", new Date(2016, 3, 7), 57000));
+        walletOperations1.add(new WalletOperation("Канцтовары", "bronenosez", new Date(2016, 2, 19), 257000));
+        walletOperations1.add(new WalletOperation("Бумага и картриджи", "sinitsa", new Date(2016, 2, 12), 113000));
+        walletOperations1.add(new WalletOperation("Кофе/чай", "coloredlime", new Date(2016, 2, 7), 57000));
 
-        walletOperations2.add(new WalletOperation("Уборщица", "accordeon", new Date(2016, 3, 9), 2500000));
-        walletOperations2.add(new WalletOperation("Интернет", "zemlecop", new Date(2016, 3, 15), 70000));
-        walletOperations2.add(new WalletOperation("Домофон", "coloredlime", new Date(2016, 3, 9), 54000));
+        walletOperations2.add(new WalletOperation("Уборщица", "accordeon", new Date(2016, 2, 9), 2500000));
+        walletOperations2.add(new WalletOperation("Интернет", "zemlecop", new Date(2016, 2, 15), 70000));
+        walletOperations2.add(new WalletOperation("Домофон", "coloredlime", new Date(2016, 2, 9), 54000));
 
         ArrayList<String> friends0 = new ArrayList<>();
         friends0.addAll(Arrays.asList("Лисица"));

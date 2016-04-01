@@ -57,7 +57,7 @@ public class WalletOperation extends MyModel implements Comparable<WalletOperati
     }
 
     public String getDateText(){
-        return date.getDate() + "." + date.getMonth() + "." + date.getYear();
+        return (date.getDate() +1) + "." + (date.getMonth() + 1) + "." + date.getYear();
     }
 
     @Override

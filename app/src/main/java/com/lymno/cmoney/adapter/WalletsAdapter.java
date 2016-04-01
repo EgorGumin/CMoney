@@ -37,9 +37,14 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        Wallet walletsData = this.walletsData.get(position);
-        //TODO исправить отображение продукта
-        viewHolder.FoodName.setText(walletsData.getName());
+        Wallet wallet = this.walletsData.get(position);
+        viewHolder.name.setText(wallet.getName());
+        viewHolder.balance.setText("Мой баланс: " + Wallet.moneyFormat(wallet.getBalance()) + " \u20BD");
+//        viewHolder.goal.setText("Цель: " + wallet.getGoalStatusText());
+//        viewHolder.daily.setText("Расход в день: " + Wallet.moneyFormat(wallet.getDaily()) + " \u20BD");
+        viewHolder.goal.setText("Цель: не реализовано");
+        viewHolder.daily.setText("Расход в день: не реализовано");
+
     }
 
     //    TODO use this method
@@ -52,13 +57,18 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
     // inner class to hold a reference to each item of RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView FoodName;
-        public TextView FoodEatLetfTime;
-        public TextView tvDate;
+        TextView name;
+        TextView balance;
+        TextView goal;
+        TextView daily;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            FoodName = (TextView) itemLayoutView.findViewById(R.id.wallet_adapter_name);
+            name = (TextView) itemLayoutView.findViewById(R.id.wallet_adapter_name);
+            balance = (TextView) itemLayoutView.findViewById(R.id.wallet_adapter_balance);
+            goal = (TextView) itemLayoutView.findViewById(R.id.wallet_adapter_goal);
+            daily = (TextView) itemLayoutView.findViewById(R.id.wallet_adapter_daily);
+
             itemLayoutView.setOnClickListener(this);
         }
 
@@ -66,11 +76,12 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
         public void onClick(View view) {
 //            todo add redirecdtion
             Context context = view.getContext();
-            Intent questInfoIntent = new Intent(context, WalletView.class);
-//            Wallet wallet = walletsData.get(getAdapterPosition());
+            Intent intent = new Intent(context, WalletView.class);
+            Wallet wallet = walletsData.get(getAdapterPosition());
+            intent.putExtra("test", 123L);
 //
-//            questInfoIntent.putExtra(FoodInfoActivity.INTENT_PRODUCT_ID, wallet.getId());
-            context.startActivity(questInfoIntent);
+            intent.putExtra(WalletView.WALLET_ID, wallet.getWalletID());
+            context.startActivity(intent);
         }
     }
 
