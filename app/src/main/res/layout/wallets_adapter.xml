@@ -4,12 +4,12 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardViewFood"
     android:layout_width="fill_parent"
-    android:layout_height="70dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="1dp"
+    card_view:cardElevation="5dp"
     card_view:cardUseCompatPadding="true">
 
 
@@ -26,48 +26,53 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="5dp"
-            android:layout_weight="7">
+            android:layout_weight="7"
+            android:translationZ="20dp">
 
             <TextView
-                android:id="@+id/food_adapter_name"
+                android:id="@+id/wallet_adapter_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:maxLines="2"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                style="@style/Base.TextAppearance.AppCompat.Title"
+                android:text="Семья"
+                android:textSize="32sp" />
 
             <TextView
-                android:id="@+id/food_adapter_left_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Мой баланс: 356,00"
+                android:id="@+id/wallet_adapter_balance" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Цель: 1897/9000"
+                android:id="@+id/wallet_adapter_goal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Расход в день: 564,00"
+                android:id="@+id/wallet_adapter_daily" />
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:visibility="gone"
-                android:maxLines="2"
-                android:textSize="13sp" />
+                android:layout_height="1dp"
+                android:background="#cecece"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
-            android:layout_weight="2">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <Button
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Осталось:"
-                android:id="@+id/textView3" />
+                android:text="Подробнее"
+                android:id="@+id/button"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_gravity="center" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/textView4" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -57,9 +57,7 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            FoodName = (TextView) itemLayoutView.findViewById(R.id.food_adapter_name);
-            FoodEatLetfTime = (TextView) itemLayoutView.findViewById(R.id.food_adapter_left_time);
-            tvDate = (TextView) itemLayoutView.findViewById(R.id.textView4);
+            FoodName = (TextView) itemLayoutView.findViewById(R.id.wallet_adapter_name);
             itemLayoutView.setOnClickListener(this);
         }
 

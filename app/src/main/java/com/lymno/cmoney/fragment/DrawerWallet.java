@@ -21,6 +21,8 @@ import com.lymno.cmoney.model.Wallet;
 import com.lymno.cmoney.model.WalletOperation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,7 +60,12 @@ public class DrawerWallet extends Fragment {
         super.onResume();
 //        ArrayList<Wallet> Wallets = Wallet.getAll();
         ArrayList<Wallet> wallets = new ArrayList<>();
-        wallets.add(new Wallet(1,"Семья", 30, new ArrayList<String>(), new ArrayList<WalletOperation>()));
+        ArrayList<String> friends = new ArrayList<>();
+        friends.addAll(Arrays.asList("Настя", "Кот"));
+        ArrayList<WalletOperation> operations = new ArrayList<>();
+        operations.addAll(Arrays.asList(new WalletOperation("Лента", "coloredlime", new Date(2016, 4, 1), 334400),
+                                        new WalletOperation("БСК", "rhinrei", new Date(2016, 3, 30), 87500)));
+        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
         if (wallets != null) {
             WalletsAdapter walletsAdapter = new WalletsAdapter(wallets);
             recyclerView.setAdapter(walletsAdapter);
