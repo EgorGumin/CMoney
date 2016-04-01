@@ -66,6 +66,9 @@ public class DrawerWallet extends Fragment {
         operations.addAll(Arrays.asList(new WalletOperation("Лента", "coloredlime", new Date(2016, 4, 1), 334400),
                                         new WalletOperation("БСК", "rhinrei", new Date(2016, 3, 30), 87500)));
         wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
+        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
+        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
+        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
         if (wallets != null) {
             WalletsAdapter walletsAdapter = new WalletsAdapter(wallets);
             recyclerView.setAdapter(walletsAdapter);

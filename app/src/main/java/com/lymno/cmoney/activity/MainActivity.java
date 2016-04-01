@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         drawerWalletFragment = new DrawerWallet();
 
         //TODO: 14.02.2016 найти способ поумнее поставить дефолтный фрагмент
-        navigationView.setCheckedItem(R.id.nav_camara);
+        navigationView.setCheckedItem(R.id.menu_drawer_wallets);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.drawer_fragments_container, drawerWalletFragment);
         fragmentTransaction.commit();
@@ -84,15 +84,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.menu_drawer_wallets) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.menu_drawer_purchases) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.menu_drawer_settings) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+        }  else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
