@@ -1,8 +1,9 @@
-package com.lymno.cmoney;
+package com.lymno.cmoney.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.lymno.cmoney.R;
+import com.lymno.cmoney.fragment.DrawerWallet;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private DrawerWallet drawerWalletFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        drawerWalletFragment = new DrawerWallet();
+
+        //TODO: 14.02.2016 найти способ поумнее поставить дефолтный фрагмент
+        navigationView.setCheckedItem(R.id.nav_camara);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.drawer_fragments_container, drawerWalletFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
