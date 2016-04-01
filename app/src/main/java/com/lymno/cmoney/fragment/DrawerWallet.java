@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.lymno.cmoney.R;
+import com.lymno.cmoney.Server;
 import com.lymno.cmoney.adapter.WalletsAdapter;
 import com.lymno.cmoney.model.Wallet;
 import com.lymno.cmoney.model.WalletOperation;
@@ -59,16 +60,7 @@ public class DrawerWallet extends Fragment {
     public void onResume() {
         super.onResume();
 //        ArrayList<Wallet> Wallets = Wallet.getAll();
-        ArrayList<Wallet> wallets = new ArrayList<>();
-        ArrayList<String> friends = new ArrayList<>();
-        friends.addAll(Arrays.asList("Настя", "Кот"));
-        ArrayList<WalletOperation> operations = new ArrayList<>();
-        operations.addAll(Arrays.asList(new WalletOperation("Лента", "coloredlime", new Date(2016, 4, 1), 334400),
-                                        new WalletOperation("БСК", "rhinrei", new Date(2016, 3, 30), 87500)));
-        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
-        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
-        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
-        wallets.add(new Wallet(1, "Семья", (334400 + 87500) / 2 - 334400, 9000, 15, friends, new ArrayList<WalletOperation>()));
+        ArrayList<Wallet> wallets = Server.getWallets();
         if (wallets != null) {
             WalletsAdapter walletsAdapter = new WalletsAdapter(wallets);
             recyclerView.setAdapter(walletsAdapter);
@@ -92,10 +84,15 @@ public class DrawerWallet extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 //        settings = getActivity().getSharedPreferences("com.lymno.myfridge.activity", Context.MODE_PRIVATE);
 //        token = settings.getString(tokenKey, "");
-        //refreshLayout.setColorSchemeColors(R.color.primary);
-//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
+//        refreshLayout.setColorSchemeColors(R.color.primary);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(false);
+                Wallet.recreate(Server.getWallets());
+                WalletsAdapter newAdapter = new WalletsAdapter(Wallet.getAll());
+                recyclerView.setAdapter(newAdapter);
+
 //                api.syncProducts(token, new Callback<ArrayList<Wallet>>() {
 //                    @Override
 //                    public void success(ArrayList<Wallet> Wallets, Response response) {
@@ -116,8 +113,8 @@ public class DrawerWallet extends Fragment {
 //                        refreshLayout.setRefreshing(false);
 //                    }
 //                });
-//            }
-//        });
+            }
+        });
 
         return view;
     }

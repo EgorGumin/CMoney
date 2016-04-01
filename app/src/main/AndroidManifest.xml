@@ -25,8 +25,7 @@
             android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.lymno.cmoney.model.Wallet,
-                           com.lymno.cmoney.model.WalletOperation" />
+            android:value="com.lymno.cmoney.model.Wallet, com.lymno.cmoney.model.WalletOperation" />
         <!-- ActiveAndroid -->
         <activity
             android:name=".activity.MainActivity"
@@ -37,6 +36,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.WalletView"
+            android:label="@string/title_activity_wallet_view"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

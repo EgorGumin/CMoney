@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lymno.cmoney.R;
+import com.lymno.cmoney.activity.WalletView;
 import com.lymno.cmoney.model.Wallet;
 
 import java.util.ArrayList;
@@ -63,12 +64,13 @@ public class WalletsAdapter extends RecyclerView.Adapter<WalletsAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
+//            todo add redirecdtion
             Context context = view.getContext();
-//            Intent questInfoIntent = new Intent(context, FoodInfoActivity.class);
-//            Wallet product = walletsData.get(getAdapterPosition());
+            Intent questInfoIntent = new Intent(context, WalletView.class);
+//            Wallet wallet = walletsData.get(getAdapterPosition());
 //
-//            questInfoIntent.putExtra(FoodInfoActivity.INTENT_PRODUCT_ID, product.getId());
-//            context.startActivity(questInfoIntent);
+//            questInfoIntent.putExtra(FoodInfoActivity.INTENT_PRODUCT_ID, wallet.getId());
+            context.startActivity(questInfoIntent);
         }
     }
 
