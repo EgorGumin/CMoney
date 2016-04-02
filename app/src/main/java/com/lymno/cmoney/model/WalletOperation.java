@@ -4,20 +4,31 @@ import android.support.annotation.NonNull;
 
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @Table(name = "WalletOperations", id = "_id")
 public class WalletOperation extends MyModel implements Comparable<WalletOperation>{
+    @Expose
+    @SerializedName("Text")
     @Column(name = "name")
     private String name;
 
+    @Expose
+    @SerializedName("Login")
     @Column(name = "login")
     private String login;
 
+    @Expose
+    @SerializedName("Date")
     @Column(name = "date")
     private Date date;
 
+    @Expose
+    @SerializedName("Value")
     @Column(name = "sum")
     private long sum;
 
@@ -57,7 +68,10 @@ public class WalletOperation extends MyModel implements Comparable<WalletOperati
     }
 
     public String getDateText(){
-        return (date.getDate() +1) + "." + (date.getMonth() + 1) + "." + date.getYear();
+//        return (date.getDate()) + "." + (date.getMonth() + 1) + "." + date.getYear();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.DAY_OF_MONTH) +"."+ (c.get(Calendar.MONTH) +1 )+"." + c.get(Calendar.YEAR) + "";
     }
 
     @Override

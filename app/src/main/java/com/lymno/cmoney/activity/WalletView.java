@@ -1,6 +1,8 @@
 package com.lymno.cmoney.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.lymno.cmoney.R;
 import com.lymno.cmoney.Server;
@@ -17,6 +20,8 @@ import com.lymno.cmoney.adapter.WalletOperationsAdapter;
 import com.lymno.cmoney.adapter.WalletsAdapter;
 import com.lymno.cmoney.model.Wallet;
 import com.lymno.cmoney.model.WalletOperation;
+import com.lymno.cmoney.model.export.BaseWalletOperation;
+import com.lymno.cmoney.network.RestClient;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +30,9 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class WalletView extends AppCompatActivity {
     public static final String WALLET_ID = "id";
@@ -51,7 +59,6 @@ public class WalletView extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id = intent.getIntExtra(WALLET_ID, -666);
-        long test = intent.getLongExtra("test", 11L);
         wallet = Wallet.getByID(id);
         WalletOperationsAdapter adapter = new WalletOperationsAdapter(this, wallet.getOperations());
 
@@ -69,11 +76,41 @@ public class WalletView extends AppCompatActivity {
 
     @OnClick(R.id.wallet_view_btn_add)
     public void addOperation(){
-//        todo set login
-        wallet.getOperations().add(0, new WalletOperation(text.getText().toString(), "LOGIN",
-        new Date(), 100*Integer.parseInt(sum.getText().toString())));
-        wallet.saveFull();
-        setAdapter();
+        add.setText("Сохранение...");
+        add.setEnabled(false);
+
+        String tokenKey = "com.lymno.cmoney.activity.token";
+        SharedPreferences settings;
+        settings = this.getSharedPreferences(
+                "com.lymno.cmoney.activity", Context.MODE_PRIVATE);
+
+        String token = settings.getString(tokenKey, "");
+        final String login = settings.getString("login", "");
+        final int money = 100 * (int) Long.parseLong(sum.getText().toString());
+        RestClient.get().addOperation(token, new BaseWalletOperation(text.getText().toString(), wallet.getWalletID(),
+                money), new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+
+                wallet.getOperations().add(0, new WalletOperation(text.getText().toString(), login,
+                        new Date(), money));
+                wallet.setBalance((int) wallet.recalculateBalance(login));
+                wallet.saveFull();
+                add.setText("Добавить");
+                add.setEnabled(true);
+                sum.setText("");
+                text.setText("");
+                setAdapter();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(WalletView.this, "fail", Toast.LENGTH_SHORT).show();
+                add.setText("Добавить");
+                add.setEnabled(true);
+            }
+        });
+
     }
 
     private void setAdapter(){

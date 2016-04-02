@@ -4,31 +4,46 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 
 @Table(name = "Wallets", id = "_id")
 public class Wallet extends MyModel{
-
+    @Expose
+    @SerializedName("WalletId")
     @Column(name = "id")
     private int walletID;
 
+    @Expose
+    @SerializedName("Name")
     @Column(name = "name")
     private String name;
 
+    @Expose
+    @SerializedName("Balance")
     @Column(name = "balance")
     private int balance;
 
+    @Expose
+    @SerializedName("TargetSum")
     @Column(name = "goal")
     private long goal;
 
+    @Expose
+    @SerializedName("StartDay")
     @Column(name = "start_day")
     private int startDay;
 
+    @Expose
+    @SerializedName("Logins")
     private ArrayList<String> friends;
 
     @Column(name = "friends")
@@ -45,7 +60,9 @@ public class Wallet extends MyModel{
         this.storedFriends = gson.toJson(friends);
     }
 
-    @Column(name = "friends")
+    @Expose
+    @SerializedName("Payments")
+    @Column(name = "operations")
     private ArrayList<WalletOperation> operations;
 
 
@@ -139,34 +156,118 @@ public class Wallet extends MyModel{
         }
     }
 
-    public long getGoalStatus(){
-        long sum = 0;
-        Date date = new Date();
-        ArrayList<WalletOperation> actualOp = getActualOperations();
-        for(WalletOperation op : actualOp){
-            sum+=op.getSum();
-        }
-        return sum;
-    }
 
     public String getGoalStatusText(){
         return moneyFormat(getGoalStatus()) + "/" + moneyFormat(goal) + " \u20BD";
     }
-//багованный код
-//    public long getDaily(){
-//        Date current = new Date();
-//        long difference;
-//        if(current.getDate() >= startDay){
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(new Date());
-//            calendar.
-//
-//            difference = current.getTime() - new Date(current.getYear(), cu, 27).getTime();
-//        }
-//
-//        int days = (int) (difference / (24 * 60 * 60 * 1000));
-//        return (goal - getGoalStatus()) / days;
-//    }
+
+    private int getDayYearIndex(Date date)
+    {
+        int sum = 0;
+        int month = date.getMonth() + 1;
+        for (int i =0; i < month; i++)
+        {
+            sum += (new GregorianCalendar(date.getYear(), i, 1)).getActualMaximum(Calendar.DAY_OF_MONTH);
+        }
+        sum -= (new GregorianCalendar(date.getYear(), month + 1, 1)).getActualMaximum(Calendar.DAY_OF_MONTH) - date.getDate();
+        return sum;
+    }
+
+    private Date getStartDayYearIndex(int start, Date today)
+    {
+        Date startDate = null;
+        if (start < today.getDate())
+        {
+            startDate = new Date(today.getYear(), today.getMonth(), start);
+        }
+        else if (start == today.getDate())
+        {
+            startDate = today;
+        }
+        else
+        {
+            int month = today.getMonth() - 1;
+            int year = today.getYear();
+            if (month == -1)
+            {
+                year--;
+                month = 11;
+            }
+            startDate = new Date(year, month, start);
+        }
+        return startDate;
+    }
+
+    public long getGoalStatus(){
+        int todayDayNumber = getDayYearIndex(new Date());
+        int startDayNumber = getDayYearIndex(getStartDayYearIndex(startDay, new Date()));
+        Calendar c = Calendar.getInstance();
+        c.setTime(getStartDayYearIndex(startDay, new Date()));
+        c.roll(Calendar.MONTH, 1);
+        int nextDay = getDayYearIndex(c.getTime());
+
+        int max = Math.max(todayDayNumber, startDayNumber);
+        int min = Math.min(startDayNumber, todayDayNumber);
+        ArrayList<WalletOperation> operations = this.operations;
+
+        int differenceDays = nextDay - todayDayNumber;
+        long sum = 0;
+
+        for (WalletOperation op : operations)
+        {
+            int opDayNumber = getDayYearIndex(op.getDate());
+            if (opDayNumber >= min && opDayNumber <= max)
+            {
+                sum += op.getSum();
+            }
+        }
+        return sum;
+    }
+
+    public long getDaily() {
+        int todayDayNumber = getDayYearIndex(new Date());
+        int startDayNumber = getDayYearIndex(getStartDayYearIndex(startDay, new Date()));
+        Calendar c = Calendar.getInstance();
+        c.setTime(getStartDayYearIndex(startDay, new Date()));
+        c.roll(Calendar.MONTH, 1);
+        int nextDay = getDayYearIndex(c.getTime());
+
+        int max = Math.max(todayDayNumber, startDayNumber);
+        int min = Math.min(startDayNumber, todayDayNumber);
+        ArrayList<WalletOperation> operations = this.operations;
+
+        int differenceDays = nextDay - todayDayNumber;
+        long sum = 0;
+
+        for (WalletOperation op : operations)
+        {
+            int opDayNumber = getDayYearIndex(op.getDate());
+            if (opDayNumber >= min && opDayNumber <= max)
+            {
+                sum += op.getSum();
+            }
+        }
+        return (goal-sum) / differenceDays;
+    }
+
+    public long recalculateBalance(String myLogin)
+    {
+        ArrayList<WalletOperation> operations = getOperations();
+        long sum = 0;
+        long mySum = 0;
+        for (WalletOperation op : operations)
+        {
+            sum += op.getSum();
+
+            if (myLogin.equals(op.getLogin()))
+            {
+                mySum += op.getSum();
+            }
+        }
+        int amountFriends = friends.size() + 1;
+        return mySum - (sum / amountFriends);
+    }
+
 
     public static String moneyFormat(long sum){
         return sum / 100 + "," +
@@ -204,5 +305,9 @@ public class Wallet extends MyModel{
 
     public void setOperations(ArrayList<WalletOperation> operations) {
         this.operations = operations;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }

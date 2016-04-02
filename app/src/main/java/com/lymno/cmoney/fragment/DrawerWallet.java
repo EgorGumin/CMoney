@@ -21,6 +21,7 @@ import com.lymno.cmoney.activity.AddWallet;
 import com.lymno.cmoney.adapter.WalletsAdapter;
 import com.lymno.cmoney.model.Wallet;
 import com.lymno.cmoney.model.WalletOperation;
+import com.lymno.cmoney.network.RestClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +29,13 @@ import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class DrawerWallet extends Fragment {
+    String token;
+
     @Bind(R.id.swipe_refresh_layout)
     protected SwipeRefreshLayout refreshLayout;
 
@@ -54,14 +60,18 @@ public class DrawerWallet extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String tokenKey = "com.lymno.cmoney.activity.token";
+        SharedPreferences settings;
+        settings = this.getActivity().getSharedPreferences(
+                "com.lymno.cmoney.activity", Context.MODE_PRIVATE);
 
+        token = settings.getString(tokenKey, "");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        ArrayList<Wallet> Wallets = Wallet.getAll();
-        ArrayList<Wallet> wallets = Server.getWallets();
+        ArrayList<Wallet> wallets = Wallet.getAll();
         if (wallets != null) {
             WalletsAdapter walletsAdapter = new WalletsAdapter(wallets);
             recyclerView.setAdapter(walletsAdapter);
@@ -89,31 +99,26 @@ public class DrawerWallet extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshLayout.setRefreshing(false);
-                Wallet.recreate(Server.getWallets());
-                WalletsAdapter newAdapter = new WalletsAdapter(Wallet.getAll());
-                recyclerView.setAdapter(newAdapter);
+                RestClient.get().updateWallets(token, new Callback<ArrayList<Wallet>>() {
+                    @Override
+                    public void success(ArrayList<Wallet> wallets, Response response) {
+                        refreshLayout.setRefreshing(false);
+//                      Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                        if (wallets != null) {
+                            Wallet.recreate(wallets);
+                            WalletsAdapter newAdapter = new WalletsAdapter(wallets);
+                            recyclerView.setAdapter(newAdapter);
+                        } else {
+                            Toast.makeText(getActivity(), "нет кошельков", Toast.LENGTH_LONG).show();
+                        }
+                    }
 
-//                api.syncProducts(token, new Callback<ArrayList<Wallet>>() {
-//                    @Override
-//                    public void success(ArrayList<Wallet> Wallets, Response response) {
-//                        refreshLayout.setRefreshing(false);
-////                      Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-//                        if (Wallets != null) {
-//                            Wallet.recreate(Wallets);
-//                            FoodAdapter newAdapter = new FoodAdapter(Wallets);
-//                            recyclerView.setAdapter(newAdapter);
-//                        } else {
-//                            Toast.makeText(getActivity(), "Неправильный тип кода или такого продукта еще нет в базе.", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void failure(RetrofitError error) {
-//                        Toast.makeText(getActivity(), error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-//                        refreshLayout.setRefreshing(false);
-//                    }
-//                });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(getActivity(), error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
 
