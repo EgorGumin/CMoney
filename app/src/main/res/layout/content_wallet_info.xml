@@ -41,13 +41,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="5dp"
+        android:padding="8dp"
+        android:layout_marginBottom="12dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Друзья в кошельке"
+            android:id="@+id/textView4"
+            android:linksClickable="false"
+            android:textSize="24dp"
+            android:autoText="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="В этом кошельке вы совсем один..."
+            android:id="@+id/wallet_info_friends"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:padding="8dp"
+        android:layout_marginBottom="12dp"
+        android:background="#ffffff" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="День отсчета"
+            android:id="@+id/textView5"
+            android:linksClickable="false"
+            android:textSize="24dp"
+            android:autoText="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:id="@+id/wallet_info_start_day"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
         android:background="#ffffff"
         android:padding="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Удалиться из счета"
+            android:text="Удалиться из кошелька"
             android:id="@+id/textView3"
             android:textSize="24dp" />
 
@@ -55,7 +107,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Удалиться"
-            android:id="@+id/button3" />
+            android:id="@+id/wallet_info_selfdelete" />
 
     </LinearLayout>
 

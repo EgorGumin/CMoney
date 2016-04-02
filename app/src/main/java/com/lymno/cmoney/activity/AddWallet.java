@@ -80,8 +80,11 @@ public class AddWallet extends AppCompatActivity {
         RestClient.get().addWallet(token, walletInfo, new Callback<Wallet>() {
             @Override
             public void success(Wallet wallet, Response response) {
-//                todo redirect to wallet info
                 wallet.saveFull();
+                Toast.makeText(AddWallet.this, "Кошелек создан", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddWallet.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
 
             @Override
@@ -105,8 +108,11 @@ public class AddWallet extends AppCompatActivity {
         RestClient.get().addUserToWallet(token, walletID, new Callback<Wallet>() {
             @Override
             public void success(Wallet wallet, Response response) {
-//                todo redirect to wallet info
                 wallet.saveFull();
+                Toast.makeText(AddWallet.this, "Вы добавлены в кошелек", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddWallet.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
 
             @Override

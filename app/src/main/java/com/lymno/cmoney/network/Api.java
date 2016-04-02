@@ -37,6 +37,10 @@ public interface Api {
     @POST("/api/wallet/AddUserToWallet")
     void addUserToWallet(@Header("Token") String token, @Body WalletID id, Callback<Wallet> cb);
 
+    @POST("/api/wallet/RemoveSelfFromWallet")
+    void removeWallet(@Header("Token") String token, @Body WalletID id, Callback<Void> cb);
+
+
 //
 //    //Получить токен по логину и паролю (вход)
 //    @POST("/api/account/getToken")
