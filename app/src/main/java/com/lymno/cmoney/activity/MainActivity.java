@@ -90,9 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.menu_drawer_settings) {
 
-        }  else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        }  else if (id == R.id.menu_drawer_log_out) {
 
         }
 
