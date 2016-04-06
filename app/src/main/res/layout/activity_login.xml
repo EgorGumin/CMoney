@@ -9,18 +9,6 @@
         a:layout_height="match_parent">
 
 
-        <Button
-            a:layout_width="wrap_content"
-            a:layout_height="wrap_content"
-            a:text="Auto login"
-            a:id="@+id/login_login_btn"
-            a:layout_marginBottom="38dp"
-            a:layout_alignParentBottom="true"
-            a:layout_alignLeft="@+id/login_password"
-            a:layout_alignStart="@+id/login_password"
-            a:layout_alignRight="@+id/login_email"
-            a:layout_alignEnd="@+id/login_email" />
-
         <EditText
             a:layout_width="wrap_content"
             a:layout_height="wrap_content"

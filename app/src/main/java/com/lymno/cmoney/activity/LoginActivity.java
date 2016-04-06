@@ -22,8 +22,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    @Bind(R.id.login_login_btn)
-    Button manualLoginBtn;
     @Bind(R.id.login_login_manual_btn)
     Button login_btn;
     @Bind(R.id.login_email)
@@ -60,26 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             public void success(Token token, Response response) {
                 settings.edit().putString(tokenKey, token.getAccessToken()).apply();
                 settings.edit().putString("login", email.getText().toString()).apply();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(LoginActivity.this, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    @OnClick(R.id.login_login_btn)
-    public void login() {
-        LoginData user = new LoginData("egor", "1234");
-        RestClient.get().entrance(user, new Callback<Token>() {
-            @Override
-            public void success(Token token, Response response) {
-                settings.edit().putString(tokenKey, token.getAccessToken()).apply();
-                settings.edit().putString("login", "egor").apply();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
