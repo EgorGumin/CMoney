@@ -1,5 +1,8 @@
 package com.lymno.cmoney.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +15,9 @@ import android.view.MenuItem;
 
 import com.lymno.cmoney.R;
 import com.lymno.cmoney.fragment.DrawerWallet;
+import com.lymno.cmoney.model.MyModel;
+import com.lymno.cmoney.model.Wallet;
+import com.lymno.cmoney.model.WalletOperation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,7 +71,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.menu_drawer_settings) {
 
         }  else if (id == R.id.menu_drawer_log_out) {
+            String tokenKey = "com.lymno.cmoney.activity.token";
+            SharedPreferences settings;
+            settings = this.getSharedPreferences(
+                    "com.lymno.cmoney.activity", Context.MODE_PRIVATE);
+            settings.edit().putString(tokenKey, "").apply();
+//          Очищаем БД
+            MyModel.truncate(Wallet.class);
+            MyModel.truncate(WalletOperation.class);
 
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
