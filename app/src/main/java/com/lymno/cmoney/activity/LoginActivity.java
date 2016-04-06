@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         RestClient.get().entrance(user, new Callback<Token>() {
             @Override
             public void success(Token token, Response response) {
-                Toast.makeText(LoginActivity.this, token.getAccessToken(), Toast.LENGTH_LONG).show();
                 settings.edit().putString(tokenKey, token.getAccessToken()).apply();
                 settings.edit().putString("login", email.getText().toString()).apply();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -79,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         RestClient.get().entrance(user, new Callback<Token>() {
             @Override
             public void success(Token token, Response response) {
-                Toast.makeText(LoginActivity.this, token.getAccessToken(), Toast.LENGTH_LONG).show();
                 settings.edit().putString(tokenKey, token.getAccessToken()).apply();
                 settings.edit().putString("login", "egor").apply();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
