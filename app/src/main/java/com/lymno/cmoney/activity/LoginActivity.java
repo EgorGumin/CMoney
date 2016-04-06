@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 
 import com.lymno.cmoney.R;
 import com.lymno.cmoney.model.export.LoginData;
@@ -32,8 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText email;
     @Bind(R.id.login_password)
     EditText password;
-    @Bind(R.id.login_toolbar)
-    Toolbar toolbar;
 
     String tokenKey = "com.lymno.cmoney.activity.token";
     SharedPreferences settings;
