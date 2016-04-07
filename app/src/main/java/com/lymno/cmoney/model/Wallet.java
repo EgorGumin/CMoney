@@ -270,8 +270,15 @@ public class Wallet extends MyModel{
 
 
     public static String moneyFormat(long sum){
+//        Math.abs()
+//        String result = sum / 100 + ",";
+//        if (sum % 100 == 0){
+//            return result + "00";
+//        }
+//        if()
+
         return sum / 100 + "," +
-                (sum % 100 == 0 ? "00" : sum % 100);
+                (sum % 100 == 0 ? "00" : Math.abs(sum % 100));
     }
 
 
