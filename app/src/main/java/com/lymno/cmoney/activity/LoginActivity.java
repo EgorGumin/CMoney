@@ -43,11 +43,11 @@ public class LoginActivity extends AppCompatActivity {
 
         String token = settings.getString(tokenKey, "");
         if (!token.isEmpty()) {
+            finish();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
-
     }
 
     @OnClick(R.id.login_login_manual_btn)
@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 settings.edit().putString(tokenKey, result.getToken()).apply();
                 settings.edit().putString("login", email.getText().toString()).apply();
                 settings.edit().putString("name", result.getName()).apply();
+                finish();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
