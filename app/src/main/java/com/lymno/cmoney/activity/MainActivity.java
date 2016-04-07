@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.lymno.cmoney.R;
 import com.lymno.cmoney.fragment.DrawerWallet;
@@ -22,6 +24,10 @@ import com.lymno.cmoney.model.WalletOperation;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerWallet drawerWalletFragment;
+    private SharedPreferences settings;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        TextView username = (TextView) headerView.findViewById(R.id.drawer_header_username);
+
         drawerWalletFragment = new DrawerWallet();
 
         //TODO: 14.02.2016 найти способ поумнее поставить дефолтный фрагмент
@@ -46,6 +55,13 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.drawer_fragments_container, drawerWalletFragment);
         fragmentTransaction.commit();
+
+
+
+        settings = this.getSharedPreferences("com.lymno.cmoney.activity", Context.MODE_PRIVATE);
+        String name = settings.getString("name", "");
+        username.setText(name);
+
     }
 
     @Override
@@ -72,9 +88,6 @@ public class MainActivity extends AppCompatActivity
 
         }  else if (id == R.id.menu_drawer_log_out) {
             String tokenKey = "com.lymno.cmoney.activity.token";
-            SharedPreferences settings;
-            settings = this.getSharedPreferences(
-                    "com.lymno.cmoney.activity", Context.MODE_PRIVATE);
             settings.edit().putString(tokenKey, "").apply();
 //          Очищаем БД
             MyModel.truncate(Wallet.class);
