@@ -6,7 +6,7 @@ import com.lymno.cmoney.model.export.BaseWalletOperation;
 import com.lymno.cmoney.model.export.LoginData;
 import com.lymno.cmoney.model.export.User;
 import com.lymno.cmoney.model.export.WalletID;
-import com.lymno.cmoney.model.imported.Token;
+import com.lymno.cmoney.model.imported.LoginResult;
 
 import java.util.ArrayList;
 
@@ -15,15 +15,13 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Query;
 
 public interface Api {
     @POST("/api/user/registration")
     void register(@Body User user, Callback<Void> cb);
 
     @POST("/api/user/entrance")
-    void entrance(@Body LoginData user, Callback<Token> cb);
+    void entrance(@Body LoginData user, Callback<LoginResult> cb);
 
     @POST("/api/wallet/CreateWallet")
     void addWallet(@Header("Token") String token, @Body BaseWalletInfo user, Callback<Wallet> cb);

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.lymno.cmoney.R;
 import com.lymno.cmoney.model.export.LoginData;
-import com.lymno.cmoney.model.imported.Token;
+import com.lymno.cmoney.model.imported.LoginResult;
 import com.lymno.cmoney.network.RestClient;
 
 import butterknife.Bind;
@@ -53,11 +53,12 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.login_login_manual_btn)
     public void manualLogin(){
         LoginData user = new LoginData(email.getText().toString(), password.getText().toString());
-        RestClient.get().entrance(user, new Callback<Token>() {
+        RestClient.get().entrance(user, new Callback<LoginResult>() {
             @Override
-            public void success(Token token, Response response) {
-                settings.edit().putString(tokenKey, token.getAccessToken()).apply();
+            public void success(LoginResult result, Response response) {
+                settings.edit().putString(tokenKey, result.getToken()).apply();
                 settings.edit().putString("login", email.getText().toString()).apply();
+                settings.edit().putString("name", result.getName()).apply();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
