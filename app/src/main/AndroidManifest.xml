@@ -27,23 +27,26 @@
             android:name="AA_MODELS"
             android:value="com.lymno.cmoney.model.Wallet, com.lymno.cmoney.model.WalletOperation" />
         <!-- ActiveAndroid -->
+
         <activity
             android:name=".activity.MainActivity"
             android:label="Кошельки"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
         <activity
             android:name=".activity.WalletView"
             android:label="Кошелек"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
         <activity android:name=".activity.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.AddWallet"
             android:label="Добавить кошелек"
@@ -53,6 +56,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.lymno.cmoney.activity.MainActivity" />
         </activity>
+
         <activity
             android:name=".activity.WalletInfo"
             android:label="Информация"

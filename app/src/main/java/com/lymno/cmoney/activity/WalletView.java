@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,16 +13,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.lymno.cmoney.R;
-import com.lymno.cmoney.Server;
 import com.lymno.cmoney.adapter.WalletOperationsAdapter;
-import com.lymno.cmoney.adapter.WalletsAdapter;
 import com.lymno.cmoney.model.Wallet;
 import com.lymno.cmoney.model.WalletOperation;
 import com.lymno.cmoney.model.export.BaseWalletOperation;
 import com.lymno.cmoney.network.RestClient;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 import butterknife.Bind;
@@ -105,7 +99,7 @@ public class WalletView extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(WalletView.this, "fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WalletView.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 add.setText("Добавить");
                 add.setEnabled(true);
             }

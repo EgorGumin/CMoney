@@ -1,25 +1,33 @@
 package com.lymno.cmoney.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.lymno.cmoney.R;
 import com.lymno.cmoney.fragment.DrawerWallet;
+import com.lymno.cmoney.model.MyModel;
+import com.lymno.cmoney.model.Wallet;
+import com.lymno.cmoney.model.WalletOperation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerWallet drawerWalletFragment;
+    private SharedPreferences settings;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        TextView username = (TextView) headerView.findViewById(R.id.drawer_header_username);
+
         drawerWalletFragment = new DrawerWallet();
 
         //TODO: 14.02.2016 найти способ поумнее поставить дефолтный фрагмент
@@ -44,6 +55,13 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.drawer_fragments_container, drawerWalletFragment);
         fragmentTransaction.commit();
+
+
+
+        settings = this.getSharedPreferences("com.lymno.cmoney.activity", Context.MODE_PRIVATE);
+        String name = settings.getString("name", "");
+        username.setText(name);
+
     }
 
     @Override
@@ -56,28 +74,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -85,15 +81,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_drawer_wallets) {
-            // Handle the camera action
+
         } else if (id == R.id.menu_drawer_purchases) {
 
         } else if (id == R.id.menu_drawer_settings) {
 
-        }  else if (id == R.id.nav_share) {
+        }  else if (id == R.id.menu_drawer_log_out) {
+            String tokenKey = "com.lymno.cmoney.activity.token";
+            settings.edit().putString(tokenKey, "").apply();
+//          Очищаем БД
+            MyModel.truncate(Wallet.class);
+            MyModel.truncate(WalletOperation.class);
 
-        } else if (id == R.id.nav_send) {
-
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
