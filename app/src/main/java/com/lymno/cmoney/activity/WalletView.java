@@ -81,12 +81,13 @@ public class WalletView extends AppCompatActivity {
         String token = settings.getString(tokenKey, "");
         final String login = settings.getString("login", "");
         final int money = 100 * (int) Long.parseLong(sum.getText().toString());
-        RestClient.get().addOperation(token, new BaseWalletOperation(text.getText().toString(), wallet.getWalletID(),
+        final String paymentComment = text.getText().toString().trim();
+        RestClient.get().addOperation(token, new BaseWalletOperation(paymentComment, wallet.getWalletID(),
                 money), new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
 
-                wallet.getOperations().add(0, new WalletOperation(text.getText().toString(), login,
+                wallet.getOperations().add(0, new WalletOperation(paymentComment, login,
                         new Date(), money));
                 wallet.setBalance((int) wallet.recalculateBalance(login));
                 wallet.saveFull();
