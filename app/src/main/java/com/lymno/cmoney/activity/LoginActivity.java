@@ -53,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.login_login_manual_btn)
     public void manualLogin(){
         LoginData user = new LoginData(email.getText().toString(), password.getText().toString());
+        login_btn.setEnabled(false);
+        login_btn.setText(R.string.loading);
         RestClient.get().entrance(user, new Callback<LoginResult>() {
             @Override
             public void success(LoginResult result, Response response) {
@@ -68,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(LoginActivity.this, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                login_btn.setEnabled(true);
+                login_btn.setText(R.string.sign_in);
             }
         });
     }

@@ -26,8 +26,8 @@
     <Button
         a:layout_width="wrap_content"
         a:layout_height="wrap_content"
-        a:text="Login"
         a:id="@+id/login_login_manual_btn"
-        a:layout_gravity="center_horizontal" />
+        a:layout_gravity="center_horizontal"
+        a:text="@string/sign_in" />
 
 </LinearLayout>
