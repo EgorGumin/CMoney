@@ -95,7 +95,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/add_wallet_friend_number"
-                android:hint="Номер кошелька" />
+                android:hint="Номер кошелька"
+                android:inputType="number" />
 
             <Button
                 android:layout_width="fill_parent"
