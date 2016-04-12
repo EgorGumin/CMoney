@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Objects;
 
 @Table(name = "Wallets", id = "_id")
 public class Wallet extends MyModel{
@@ -114,9 +113,11 @@ public class Wallet extends MyModel{
         return walletsWithOperations;
     }
 
+
+//    Получить из БД список операций для этого кошелька, новые операции в начале списка
     public List<WalletOperation> getStoredOperations() {
-        List<WalletOperation> walletOperations = getMany(WalletOperation.class, "Wallet");
-        return walletOperations;
+        return new Select().from(WalletOperation.class).orderBy("date DESC")
+                .where("wallet = ?", this.getId()).execute();
     }
 
     public static Wallet getByID(int id) {
