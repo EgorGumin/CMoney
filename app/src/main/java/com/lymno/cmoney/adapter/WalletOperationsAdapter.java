@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lymno.cmoney.R;
@@ -55,7 +54,7 @@ public class WalletOperationsAdapter extends BaseAdapter {
 
         ((TextView) view.findViewById(R.id.tvDescr)).setText(p.getName());
         ((TextView) view.findViewById(R.id.wallet_view_name_date))
-                .setText(p.getLogin() + ", " + p.getDateText());
+                .setText(p.getLogin() + ", " + p.getTimeText() + " " + p.getDateText());
         ((TextView) view.findViewById(R.id.wallet_view_sum)).setText(p.getSumText());
 
 

@@ -74,6 +74,12 @@ public class WalletOperation extends MyModel implements Comparable<WalletOperati
         return c.get(Calendar.DAY_OF_MONTH) +"."+ (c.get(Calendar.MONTH) +1 )+"." + c.get(Calendar.YEAR) + "";
     }
 
+    public String getTimeText(){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.HOUR_OF_DAY) +":"+ c.get(Calendar.MINUTE) + "";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
