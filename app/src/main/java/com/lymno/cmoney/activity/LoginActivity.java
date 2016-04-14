@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -55,9 +56,11 @@ public class LoginActivity extends AppCompatActivity {
         LoginData user = new LoginData(email.getText().toString(), password.getText().toString());
         login_btn.setEnabled(false);
         login_btn.setText(R.string.loading);
+        Log.d("Request", "Login started");
         RestClient.get().entrance(user, new Callback<LoginResult>() {
             @Override
             public void success(LoginResult result, Response response) {
+                Log.d("Request", "Login finished");
                 settings.edit().putString(tokenKey, result.getToken()).apply();
                 settings.edit().putString("login", email.getText().toString()).apply();
                 settings.edit().putString("name", result.getName()).apply();
